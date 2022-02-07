@@ -1,0 +1,23 @@
+{
+    "name": "base-clean-ddd",
+    "version": "0.0.0",
+    "main": "dist/index.js",
+    "license": "MIT",
+    "scripts": {
+        "dev": "NODE_ENV=development nodemon",
+        "build": "rimraf dist && tsc",
+        "start": "NODE_ENV=production node .",
+        "depgraph": "depcruise --include-only \"^src/.*\" --config dependency-cruiser.conf.js --output-type dot src | dot -T svg > dep.svg"
+    },
+    "devDependencies": {
+        "@types/node": "^17.0.15",
+        "dependency-cruiser": "^11.3.0",
+        "nodemon": "^2.0.15",
+        "rimraf": "^3.0.2",
+        "ts-node": "^10.4.0",
+        "typescript": "^4.5.5"
+    },
+    "dependencies": {
+        "mongodb": "^4.3.1"
+    }
+}
