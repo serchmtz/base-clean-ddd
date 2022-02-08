@@ -3,5 +3,6 @@ import { BackofficeEvent } from "../domain/BackofficeEvent";
 
 export interface IBackofficeEventRepository {
   get: (id: BackofficeEventId) => Promise<BackofficeEvent>;
-  add: (event: BackofficeEvent) => Promise<void>;
+  add: (event: BackofficeEvent) => Promise<BackofficeEvent>;
+  getAll: () => Promise<BackofficeEvent[]>;
 }

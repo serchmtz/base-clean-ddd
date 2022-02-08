@@ -1,8 +1,10 @@
 import { BackofficeEvent } from "../../domain/BackofficeEvent";
 import { IBackofficeEventRepository } from "../IBackofficeEventRepository";
 import { ICreateBackofficeOutput } from "./ICreateBackofficeOutput";
-import { ICreateBackofficeInput } from "./ICreateBackofficeInput";
-import { CreateBackofficeInputData } from "./CreateBackofficeInputData";
+import {
+  ICreateBackofficeInput,
+  CreateBackofficeInputData,
+} from "./ICreateBackofficeInput";
 
 export class CreateBackofficeEvent implements ICreateBackofficeInput {
   readonly repo: IBackofficeEventRepository;
@@ -16,9 +18,10 @@ export class CreateBackofficeEvent implements ICreateBackofficeInput {
     this.output = output;
   }
 
-  execute(inputData: CreateBackofficeInputData) {
-    const event = BackofficeEvent.fromPlainData({ ...inputData, id: "" });
-    this.repo.add(event);
+  async execute(inputData: CreateBackofficeInputData) {
+    const event = await this.repo.add(
+      BackofficeEvent.fromPlainData({ ...inputData, id: "" })
+    );
     this.output.present(event.toPlainData());
   }
 }

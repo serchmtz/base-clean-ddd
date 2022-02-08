@@ -1,10 +1,10 @@
 import {
   ICreateBackofficeOutput,
   CreateBackofficeOutputData,
-} from "../../application/Create/ICreateBackofficeOutput";
-import { IBackofficeEventView } from "../IBackofficeEventView";
+} from "../application/Create/ICreateBackofficeOutput";
+import { IBackofficeEventView } from "./IBackofficeEventView";
 
-export class CreateBackofficeEventPresenter implements ICreateBackofficeOutput {
+export class BackofficeEventPresenter implements ICreateBackofficeOutput {
   constructor(private _view: IBackofficeEventView) {}
 
   present(outputData: CreateBackofficeOutputData) {

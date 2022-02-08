@@ -1,7 +1,7 @@
 {
+    "extends": "../../../../tsconfig.json",
     "compilerOptions": {
-        "baseUrl": ".",
-        "lib": ["esnext"],
+        "baseUrl": "../../../../",
         "target": "es5",
         "lib": [
             "dom",
@@ -12,23 +12,21 @@
         "skipLibCheck": true,
         "strict": false,
         "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
         "incremental": true,
         "esModuleInterop": true,
         "module": "esnext",
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "jsx": "preserve",
-        "types": ["node"],
-        "paths": {
-            "@contexts/*": ["src/Contexts/*"],
-            "@backoffice/*": ["src/Contexts/Backoffice/*"],
-            "@apps/*": ["src/apps/*"],            
-        }
+        "jsx": "preserve"
     },
-    "include": ["src"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx"
+    ],
     "exclude": [
-        "node_modules",
-        "src/apps"
+        "node_modules"
     ]
 }
