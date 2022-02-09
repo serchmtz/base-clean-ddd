@@ -5,7 +5,7 @@ import { BackofficeEventId } from "../domain/BackofficeEventId";
 export class MemBackofficeEventRepository
   implements IBackofficeEventRepository
 {
-  private static _instace: MemBackofficeEventRepository = null;
+  private static _instace: MemBackofficeEventRepository | null = null;
   static getInstance() {
     if (MemBackofficeEventRepository._instace === null) {
       MemBackofficeEventRepository._instace =

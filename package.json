@@ -7,6 +7,9 @@
         "dev:backoffice:frontend": "next dev ./src/apps/backoffice/frontend",
         "build:backoffice:frontend": "next build ./src/apps/backoffice/frontend",
         "start:backoffice:frontend": "next build ./src/apps/backoffice/frontend -p 8080",
+        "build:backoffice:cli": "tsc -p src/apps/backoffice/cli/tsconfig.json",
+        "start:backoffice:cli": "yarn build:backoffice:cli && node src/apps/backoffice/cli/dist/apps/backoffice/cli/source/cli.js",
+        "dev:backoffice:cli": "nodemon -w src/apps/backoffice/cli -e ts,js,tsx,jsx -x ts-node --files --transpile-only ./src/apps/backoffice/cli/source/cli",
         "depgraph": "depcruise --include-only \"^src/.*\" --config dependency-cruiser.conf.js --output-type dot src | dot -T svg > dep.svg"
     },
     "devDependencies": {
@@ -24,6 +27,9 @@
         "typescript": "^4.5.5"
     },
     "dependencies": {
+        "ink": "^3.2.0",
+        "ink-form": "^1.0.1",
+        "ink-table": "^3.0.0",
         "mongodb": "^4.3.1",
         "next": "^12.0.10",
         "react": "^17.0.2",
@@ -32,6 +38,6 @@
         "swr": "^1.2.1"
     },
     "peerDependencies": {
-        "webpack": "5.x"
+        "webpack": "^5.68.0"
     }
 }

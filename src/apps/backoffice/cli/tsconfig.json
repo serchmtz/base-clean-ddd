@@ -1,0 +1,26 @@
+{
+
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["dom", "dom.iterable", "esnext"],
+
+        "downlevelIteration": true,
+        "allowJs": true,
+        "skipLibCheck": true,
+        "outDir": "dist",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": false,
+        "jsx": "react-jsx"
+    },
+    "include": ["source"],
+    "exlude": [
+        "../fontend/",
+    ]
+}
