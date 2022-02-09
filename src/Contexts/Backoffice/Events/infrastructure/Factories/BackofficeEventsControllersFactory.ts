@@ -3,12 +3,19 @@ import { DisplayAllBackofficeEvents } from "../../application/Display/DisplayAll
 import { BackofficeEventController } from "../BackofficeEventController";
 import { CreateBackofficeEventPresenter } from "../Create/CreateBackofficeEventPresenter";
 import { DisplayAllBackofficeEvenstPresenter } from "../Display/DisplayAllBackofficeEventsPresenter";
+import { IBackofficeEventGW } from "../IBackofficeEventGW";
 import { IBackofficeEventView } from "../IBackofficeEventView";
 import { MemBackofficeEventRepository } from "../MemBackofficeEventRepository";
+import { PersistentBackofficeEventRepository } from "../PersistentBackofficeEventRepository";
 
 export class BackofficeEventsControllersFactory {
-  static createController(view: IBackofficeEventView) {
-    const repo = MemBackofficeEventRepository.getInstance();
+  static createController(
+    view: IBackofficeEventView,
+    gateway?: IBackofficeEventGW
+  ) {
+    const repo = !!gateway
+      ? new PersistentBackofficeEventRepository(gateway)
+      : MemBackofficeEventRepository.getInstance();
 
     const createEvent = new CreateBackofficeEvent(
       repo,

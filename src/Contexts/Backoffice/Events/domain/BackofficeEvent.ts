@@ -47,3 +47,5 @@ export class BackofficeEvent {
     };
   }
 }
+
+export type NewBackofficeEvent = Omit<BackofficeEvent, "id">;
