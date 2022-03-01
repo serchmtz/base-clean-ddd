@@ -1,4 +1,4 @@
-import { BackofficeEventViewModel } from "@contexts/Backoffice/Events/infrastructure/IBackofficeEventView";
+import { EventViewModel } from "@contexts/Backoffice/Events/infrastructure/IEventView";
 import useSWR from "swr";
 import { useForm, SubmitHandler } from "react-hook-form";
 interface Props {}
@@ -11,11 +11,11 @@ type Input = {
   duration: string;
 };
 const Events: React.FC<Props> = () => {
-  const { data, error, mutate } = useSWR<BackofficeEventViewModel[]>(
+  const { data, error, mutate } = useSWR<EventViewModel[]>(
     "/api/events",
     fetcher
   );
-  const { register, handleSubmit,  } = useForm<Input>();
+  const { register, handleSubmit } = useForm<Input>();
 
   const onSubmit: SubmitHandler<Input> = async (formData) => {
     try {
@@ -35,14 +35,14 @@ const Events: React.FC<Props> = () => {
   return (
     <div className="flex-row w-full">
       <form onSubmit={handleSubmit(onSubmit)}>
-      <h4>Create an Event</h4>
+        <h4>Create an Event</h4>
         <label htmlFor="name-input">Name</label>
         <input id="name-input" {...register("name", { required: true })} />
         <label htmlFor="duration-input">Duration</label>
         <input
           id="duration-input"
           {...register("duration", { required: true })}
-      />     
+        />
         <button type="submit">Submit</button>
       </form>
       <table>

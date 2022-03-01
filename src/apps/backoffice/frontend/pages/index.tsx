@@ -1,11 +1,12 @@
 import React from "react";
+import Link from "next/link";
 
 interface Props {}
 
 const Home: React.FC<Props> = () => {
   return (
     <div>
-      <a href="/events">Events</a>
+      <Link href="/events">Events</Link>
     </div>
   );
 };

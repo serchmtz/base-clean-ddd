@@ -1,24 +1,32 @@
 import React from "react";
-import { BackofficeEventController } from "../../../../Contexts/Backoffice/Events/infrastructure/BackofficeEventController";
-import { BackofficeEventsControllersFactory } from "../../../../Contexts/Backoffice/Events/infrastructure/Factories/BackofficeEventsControllersFactory";
+import { EventController } from "../../../../Contexts/Backoffice/Events/infrastructure/EventController";
+import { EventsControllersFactory } from "../../../../Contexts/Backoffice/Events/infrastructure/Factories/EventsControllersFactory";
 import {
-  IBackofficeEventView,
-  BackofficeEventViewModel,
-} from "../../../../Contexts/Backoffice/Events/infrastructure/IBackofficeEventView";
+  IEventView,
+  EventViewModel,
+} from "../../../../Contexts/Backoffice/Events/infrastructure/IEventView";
+
+import { db, mongodbClient } from "../../Shared/config/mongodbConnection";
+import { MongoEventGW } from "../../Shared/Gateways/Event/MongoEventGW";
 
 import Table from "ink-table";
 import { Form, FormStructure } from "ink-form";
 import { Box } from "ink";
 
+
 interface EventViewProps {}
+
+
 interface EventViewState {
-  events: BackofficeEventViewModel[];
+  events: EventViewModel[];
 }
+
+
 export class EventView
   extends React.Component<EventViewProps, EventViewState>
-  implements IBackofficeEventView
+  implements IEventView
 {
-  private _controller: BackofficeEventController;
+  private _controller: EventController;
   form: FormStructure = {
     title: "Create an Event",
     sections: [
@@ -37,10 +45,10 @@ export class EventView
       events: [],
     };
     this._controller =
-      BackofficeEventsControllersFactory.createController(this);
-    this._controller.displayAllEvents();
+      EventsControllersFactory.createController(this, new MongoEventGW(db));
+    this._controller.displayAllEvents();    
   }
-  show(viewModel: BackofficeEventViewModel) {
+  show(viewModel: EventViewModel) {
     this.setState((prev) => {
       const index = prev.events.findIndex((e) => e.id === viewModel.id);
       if (index > -1) prev.events[index] = viewModel;
@@ -48,10 +56,12 @@ export class EventView
       return { events: [...prev.events] };
     });
   }
-  showAll(viewModel: BackofficeEventViewModel[]) {
+  showAll(viewModel: EventViewModel[]) {
     this.setState({ events: viewModel });
   }
-
+  async componentWillUnmount(){
+    await mongodbClient.close();
+  }
   render() {
     const events = this.state.events;
     return (

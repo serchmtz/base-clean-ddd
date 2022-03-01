@@ -4,11 +4,9 @@ import { EventView } from "./EventView";
 export const App = () => {
   const { exit } = useApp();
 
-  useInput((input, _key) => {
-    if (input === "q") {
+  useInput((input, key) => {
+    if (key.ctrl && input === "q") {
       exit();
-    }
-    if (input === "1") {
     }
   });
 
@@ -17,7 +15,7 @@ export const App = () => {
       <Box flexDirection="column">
         <EventView />
         <Newline />
-        <Text>q. Exit</Text>
+        <Text>{"Ctrl-q: Exit"}</Text>
       </Box>
     </Box>
   );

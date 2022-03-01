@@ -1,30 +1,33 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { BackofficeEventsControllersFactory } from "@backoffice/Events/infrastructure/Factories/BackofficeEventsControllersFactory";
+import { EventsControllersFactory } from "@backoffice/Events/infrastructure/Factories/EventsControllersFactory";
 import {
-  IBackofficeEventView,
-  BackofficeEventViewModel,
-} from "@backoffice/Events/infrastructure/IBackofficeEventView";
-import { MongoBackofficeEventGW } from "../../../../Shared/Gateways/Event/MongoBackofficeEventGW";
+  IEventView,
+  EventViewModel,
+} from "@backoffice/Events/infrastructure/IEventView";
+import { MongoEventGW } from "../../../../Shared/Gateways/Event/MongoEventGW";
 import { db } from "../../../../Shared/config/mongodbConnection";
-class EventView implements IBackofficeEventView {
+
+class EventView implements IEventView {
   constructor(private _res: NextApiResponse) {}
   setRes(res: NextApiResponse) {
     this._res = res;
   }
-  show(viewModel: BackofficeEventViewModel) {
+  show(viewModel: EventViewModel) {
     this._res.status(200).json(viewModel);
   }
-  showAll(viewModel: BackofficeEventViewModel[]) {
+  showAll(viewModel: EventViewModel[]) {
     this._res.status(200).json(viewModel);
   }
 }
-const mongogw = new MongoBackofficeEventGW(db);
-export default (req: NextApiRequest, res: NextApiResponse) => {
+
+const mongogw = new MongoEventGW(db);
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     try {
       const { name, duration } = JSON.parse(req.body);
       const view = new EventView(res);
-      const controller = BackofficeEventsControllersFactory.createController(
+      const controller = EventsControllersFactory.createController(
         view,
         mongogw
       );
@@ -36,7 +39,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
   } else if (req.method === "GET") {
     try {
       const view = new EventView(res);
-      const controller = BackofficeEventsControllersFactory.createController(
+      const controller = EventsControllersFactory.createController(
         view,
         mongogw
       );
@@ -48,4 +51,4 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
     res.status(405);
     res.end();
   }
-};
+}
